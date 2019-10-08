@@ -79,9 +79,23 @@ public class DAO {
 	 * @return le nombre de bons de commande pour ce client (table PURCHASE_ORDER)
 	 * @throws DAOException
 	 */
-	public int numberOfOrdersForCustomer(int customerId) throws DAOException {
-		throw new UnsupportedOperationException("Pas encore implémenté");
-	}
+	public int numberOfOrdersForCustomer(int customerId) throws SQLException {
+            int result=0;
+            String sql = "SELECT COUNT(*) AS NUMBER FROM PURCHASE_ORDER WHERE CUSTOMER_ID = ?";
+            try(Connection connection = myDataSource.getConnection();
+                    PreparedStatement stmt = connection.prepareStatement(sql);
+                ){
+                stmt.setInt(1, customerId);
+                ResultSet rs = stmt.executeQuery();
+                if(rs.next()){
+                    result = rs.getInt("NUMBER");
+                }
+            }
+            catch(SQLException e){
+                Logger.getLogger("DAO").log(Level.SEVERE, null, e);
+            }
+            return result;
+        }
 
 	/**
 	 * Trouver un Customer à partir de sa clé

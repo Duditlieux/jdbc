@@ -34,7 +34,7 @@ public class DAOTest {
 	 * @throws simplejdbc.DAOException
 	 */
 	@Test
-	public void testNumberOfOrdersForCustomer() throws DAOException {
+	public void testNumberOfOrdersForCustomer() throws SQLException {
 		int customerId = 36;
 		int expResult = 2;
 		int result = myDAO.numberOfOrdersForCustomer(customerId);
